@@ -1,10 +1,14 @@
 <template>
     <div>
         <div v-for="item in allItems" :class="noChildren(item)">
-            {{ item.id +'. ('+item.code +') '+item.fullPath}}
-            {{item.children}}
-            <v-textarea v-model="item.keywords"
-                        @input="changeKeywords"></v-textarea>
+            <strong>{{ item.id +'. ('+item.code +') '+item.name}}</strong>
+            <br/><strong style="font-style: italic">Full path:</strong> {{item.fullPath}}
+            <br/><strong style="font-style: italic">Parent:</strong> {{ item.parentId || 'N/A'}}
+            <br/><strong style="font-style: italic">
+            {{ (item.children && item.children.length>0 ? ('Subtopics: ' + item.children) : 'No children')}}</strong>
+            <ChipTagsInputText v-model="item.keywords"
+                               label="Keywords"
+                               @input="changeKeywords"></ChipTagsInputText>
         </div>
     </div>
 </template>
@@ -12,12 +16,17 @@
 <script>
 
     import axios from 'axios';
+    import ChipTagsInputText from "./ChipTagsInputText";
 
     export default {
         mounted() {
             axios
                 .get('http://localhost:8001/rest/categories')
-                .then(response => (this.allItems = response.data))
+                .then(response => (this.allItems = response.data.map(i => ({
+                        ...i,
+                        keywords: i.keywords && i.keywords.split(',')
+                    })
+                )))
 
         },
         methods: {
@@ -25,7 +34,10 @@
                 return item.children && item.children.length > 0 ? '' : 'noChildren';
             },
             changeKeywords() {
-                let transformedRequest = this.allItems.map(i => ({id: i.id, keywords: i.keywords}));
+                let transformedRequest = this.allItems.map(i => ({
+                    id: i.id,
+                    keywords: i.keywords && i.keywords.join(',')
+                }));
 
                 axios
                     .post('http://localhost:8001/rest/categories', transformedRequest)
@@ -35,6 +47,9 @@
         data: () => ({
             allItems: [],
         }),
+        components: {
+            ChipTagsInputText
+        }
     }
 </script>
 

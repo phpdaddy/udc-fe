@@ -4,13 +4,14 @@
                 wrap>
 
             <v-flex xs12>
-                <v-tabs-items v-model="activeTab">
+                <v-tabs-items :value="activeTab">
                     <v-tab-item>
                         <v-flex xs12>
-                            <v-textarea
+                            <ChipTagsInputText
                                     v-model="keywords"
+                                    label="Keywords"
                                     @input="changeKeywords"
-                            ></v-textarea>
+                            ></ChipTagsInputText>
                             <TreeView
                                     ref="treeView1"
                             ></TreeView>
@@ -47,6 +48,7 @@
 
     import TreeView from "./TreeView";
     import AdminView from "./AdminView";
+    import ChipTagsInputText from "./ChipTagsInputText";
 
     export default {
         data: () => ({
@@ -60,15 +62,15 @@
         },
         methods: {
             changeKeywords() {
-                this.$refs.treeView1.changeKeywords(this.keywords)
+                this.$refs.treeView1.changeKeywords(this.keywords.join(','))
             },
             changeAnnotation() {
                 this.$refs.treeView2.changeAnnotation(this.annotation)
             }
         },
-        components: {TreeView, AdminView},
+        components: {TreeView, AdminView, ChipTagsInputText},
         props: {
-            activeTab: null,
+            activeTab: Number,
         }
     }
 </script>
