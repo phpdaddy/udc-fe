@@ -6,10 +6,24 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
 
-        </v-toolbar>
 
+            <v-tabs
+                    centered
+                    color="transparent"
+                    v-model="activeTab">
+                <v-tab ripple>
+                    Keywords
+                </v-tab>
+                <v-tab ripple>
+                    Annotation
+                </v-tab>
+                <v-tab ripple>
+                    Admin
+                </v-tab>
+            </v-tabs>
+        </v-toolbar>
         <v-content>
-            <MainView/>
+            <MainView :activeTab="activeTab"/>
         </v-content>
     </v-app>
 </template>
@@ -22,10 +36,12 @@
         components: {
             MainView,
         },
-        data() {
-            return {
-                //
-            }
-        }
+        data: () => ({
+            activeTab: null,
+        })
     }
 </script>
+
+<style scoped>
+
+</style>

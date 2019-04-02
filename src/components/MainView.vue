@@ -4,26 +4,16 @@
                 wrap>
 
             <v-flex xs12>
-                <v-tabs
-                        v-model="activeTab"
-                        color="cyan"
-                        dark
-                        slider-color="yellow">
-                    <v-tab ripple>
-                        Keywords
-                    </v-tab>
-                    <v-tab ripple>
-                        Annotation
-                    </v-tab>
-                    <v-tab ripple>
-                        Admin
-                    </v-tab>
+                <v-tabs-items v-model="activeTab">
                     <v-tab-item>
                         <v-flex xs12>
                             <v-textarea
                                     v-model="keywords"
                                     @input="changeKeywords"
                             ></v-textarea>
+                            <TreeView
+                                    ref="treeView1"
+                            ></TreeView>
                         </v-flex>
 
                     </v-tab-item>
@@ -34,18 +24,20 @@
                                     v-model="annotation"
                                     @input="changeAnnotation"
                             ></v-textarea>
+                            <TreeView
+                                    ref="treeView2"
+                            ></TreeView>
                         </v-flex>
 
                     </v-tab-item>
-                    <v-tab-item>
-                        <AdminView></AdminView>
-                    </v-tab-item>
-                </v-tabs>
 
-                <TreeView
-                        v-if="showTreeView"
-                        ref="treeView"
-                ></TreeView>
+                    <v-tab-item>
+                        <v-flex xs12>
+                            <AdminView></AdminView>
+                        </v-flex>
+                    </v-tab-item>
+                </v-tabs-items>
+
             </v-flex>
         </v-layout>
     </v-container>
@@ -60,7 +52,6 @@
         data: () => ({
             keywords: null,
             annotation: null,
-            activeTab: null,
         }),
         computed: {
             showTreeView() {
@@ -69,13 +60,16 @@
         },
         methods: {
             changeKeywords() {
-                this.$refs.treeView.changeKeywords(this.keywords)
+                this.$refs.treeView1.changeKeywords(this.keywords)
             },
             changeAnnotation() {
-                this.$refs.treeView.changeAnnotation(this.annotation)
+                this.$refs.treeView2.changeAnnotation(this.annotation)
             }
         },
-        components: {TreeView, AdminView}
+        components: {TreeView, AdminView},
+        props: {
+            activeTab: null,
+        }
     }
 </script>
 
