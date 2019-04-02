@@ -22,7 +22,7 @@
                 });
             };
             axios
-                .get('http://localhost:8001/rest/category/all')
+                .get('http://localhost:8001/rest/categories/tree')
                 .then(response => (this.allItems = transform(response.data)))
 
         },
@@ -69,7 +69,7 @@
             changeKeywords(keywords) {
                 if (keywords && keywords.trim()) {
                     axios
-                        .get('http://localhost:8001/rest/search/keywords/' + keywords)
+                        .get('http://localhost:8001/rest/categories/search/keywords/' + keywords)
                         .then(response => (this.search = response.data.id))
                 } else {
                     this.search = null
@@ -78,7 +78,7 @@
             changeAnnotation(annotation) {
                 if (annotation && annotation.trim()) {
                     axios
-                        .get('http://localhost:8001/rest/search/annotation/' + annotation)
+                        .get('http://localhost:8001/rest/categories/search/annotation/' + annotation)
                         .then(response => (this.search = response.data.id))
                 } else {
                     this.search = null

@@ -1,24 +1,24 @@
 <template>
     <v-container>
         <v-layout
-                wrap
-        >
+                wrap>
 
             <v-flex xs12>
                 <v-tabs
                         v-model="activeTab"
                         color="cyan"
                         dark
-                        slider-color="yellow"
-                >
+                        slider-color="yellow">
                     <v-tab ripple>
                         Keywords
                     </v-tab>
                     <v-tab ripple>
                         Annotation
                     </v-tab>
-                    <v-tab-item
-                    >
+                    <v-tab ripple>
+                        Admin
+                    </v-tab>
+                    <v-tab-item>
                         <v-flex xs12>
                             <v-textarea
                                     v-model="keywords"
@@ -28,8 +28,7 @@
 
                     </v-tab-item>
 
-                    <v-tab-item
-                    >
+                    <v-tab-item>
                         <v-flex xs12>
                             <v-textarea
                                     v-model="annotation"
@@ -38,11 +37,13 @@
                         </v-flex>
 
                     </v-tab-item>
+                    <v-tab-item>
+                        <AdminView></AdminView>
+                    </v-tab-item>
                 </v-tabs>
 
-            </v-flex>
-            <v-flex xs12>
                 <TreeView
+                        v-if="showTreeView"
                         ref="treeView"
                 ></TreeView>
             </v-flex>
@@ -53,6 +54,7 @@
 <script>
 
     import TreeView from "./TreeView";
+    import AdminView from "./AdminView";
 
     export default {
         data: () => ({
@@ -60,6 +62,11 @@
             annotation: null,
             activeTab: null,
         }),
+        computed: {
+            showTreeView() {
+                return this.activeTab === 0 || this.activeTab === 1;
+            }
+        },
         methods: {
             changeKeywords() {
                 this.$refs.treeView.changeKeywords(this.keywords)
@@ -68,7 +75,7 @@
                 this.$refs.treeView.changeAnnotation(this.annotation)
             }
         },
-        components: {TreeView}
+        components: {TreeView, AdminView}
     }
 </script>
 
