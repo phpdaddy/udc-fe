@@ -1,9 +1,10 @@
 <template>
     <div>
-        <div v-for="item in allItems">
+        <div v-for="item in allItems" :class="noChildren(item)">
             {{ item.id +'. ('+item.code +') '+item.fullPath}}
+            {{item.children}}
             <v-textarea v-model="item.keywords"
-                    @input="changeKeywords"></v-textarea>
+                        @input="changeKeywords"></v-textarea>
         </div>
     </div>
 </template>
@@ -20,9 +21,12 @@
 
         },
         methods: {
+            noChildren(item) {
+                return item.children && item.children.length > 0 ? '' : 'noChildren';
+            },
             changeKeywords() {
                 let transformedRequest = this.allItems.map(i => ({id: i.id, keywords: i.keywords}));
-                console.log(transformedRequest)
+
                 axios
                     .post('http://localhost:8001/rest/categories', transformedRequest)
                     .then();
@@ -35,4 +39,7 @@
 </script>
 
 <style>
+    .noChildren {
+        background-color: aliceblue;
+    }
 </style>
