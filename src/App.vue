@@ -44,4 +44,8 @@
 
 <style scoped>
 
+    .v-toolbar .v-tabs {
+        width: auto;
+    }
+
 </style>
