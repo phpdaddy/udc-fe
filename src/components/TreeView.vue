@@ -1,11 +1,11 @@
 <template>
-    <v-treeview style="text-align: left"
-                :active="active"
-                active-class="active"
-                activatable
-                :open="open"
-                :items="items"
-                open-on-click></v-treeview>
+    <v-treeview
+            :active="active"
+            active-class="active"
+            activatable
+            :open="open"
+            :items="items"
+            open-on-click></v-treeview>
 </template>
 
 <script>

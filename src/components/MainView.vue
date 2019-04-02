@@ -1,7 +1,6 @@
 <template>
     <v-container>
         <v-layout
-                text-xs-center
                 wrap
         >
 
