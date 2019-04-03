@@ -4,7 +4,6 @@
             <v-toolbar-title class="headline text-uppercase">
                 <span class="font-weight-light">UDC</span>
             </v-toolbar-title>
-            <img alt="Vue logo" src="./assets/logo-slon.jpg" class="logo">
             <v-spacer></v-spacer>
 
 
